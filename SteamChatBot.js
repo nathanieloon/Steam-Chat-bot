@@ -423,34 +423,34 @@ function click(el){
 }
 
 // Click all the names to open them up
-var numOffline = $('.offline').length, chatLen = new Array();
-$('.in-game').each(function(){click(this)});
-$('.online').each(function(){click(this)});
+var numOffline = $J('.offline').length, chatLen = new Array();
+$J('.in-game').each(function(){click(this)});
+$J('.online').each(function(){click(this)});
 
 //The polling function
 var chatPoll = function() {
 	//go through the recent chats and look for new commands
 	
-    if (numOffline != $('.offline').length) {
-        numOffline = $('.offline').length;
+    if (numOffline != $J('.offline').length) {
+        numOffline = $J('.offline').length;
         // Click all the names to open them up
-        $('.in-game').each(function(){click(this)});
-        $('.online').each(function(){click(this)});
+        $J('.in-game').each(function(){click(this)});
+        $J('.online').each(function(){click(this)});
     }
 
-    $('.chat_dialog').each(function(index){
-        var message = $(this).find('.chat_message_text').last().text();
-        console.log(message);
-        newChatLen = $(this).find('.chat_message_text').length;
+    $J('.chat_dialog').each(function(index){
+        var message = $J(this).find('.chat_message_text').last().text();
+        console.log($J(this).find('.chatdialog_header').attr('data-miniprofile'));
+        newChatLen = $J(this).find('.chat_message_text').length;
         if (chatLen[index] != newChatLen) {
-            click($('.friendslist_entry').attr("data-miniprofile", $(this).find('.chatdialog_header').attr('data-miniprofile')));
+            $J('.friendslist_entry').attr("data-miniprofile", $J(this).find('.chatdialog_header').attr('data-miniprofile')).click();
             chatLen[index] = newChatLen;
             chooseAction(message);
         }
     });
 
     //console.log(lastMessage);
-    $('.chat_dialog_content_inner').children('.chat_message').last().each(function(){console.log($(this).children('.chat_message_text').text())});
+    $J('.chat_dialog_content_inner').children('.chat_message').last().each(function(){console.log($J(this).children('.chat_message_text').text())});
 }
 
 setInterval(function(){
