@@ -407,8 +407,7 @@ var observer = new MutationObserver(function(mutations) {
             //console.log($(mutation.addedNodes[0]).children('.chat_message_text').text());
             var text = $(mutation.addedNodes[0]).children('.chat_message_text').text();
             
-            if (
-                text != 'undefined') {
+            if (text != 'undefined') {
                 chooseAction(text);
             }
         }
