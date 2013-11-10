@@ -443,7 +443,7 @@ var chatPoll = function() {
         console.log(message);
         newChatLen = $(this).find('.chat_message_text').length;
         if (chatLen[index] != newChatLen) {
-            click($('.friendslist_entry').attr("data-miniprofile", $(this).find('.chatdialog_header').attr('data-miniprofile')));
+            click($J('.friendslist_entry').attr("data-miniprofile", $(this).find('.chatdialog_header').attr('data-miniprofile')));
             chatLen[index] = newChatLen;
             chooseAction(message);
         }
