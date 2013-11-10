@@ -31,8 +31,7 @@ page.open('http://steamcommunity.com/chat/', function(status) {
         
         page.injectJs("SteamChatBot.js");
         console.log("SteamChatBot.js loaded - SteamChatBot is now running");
-    }
-	
+    }	
 });
 
 var i = 0;
