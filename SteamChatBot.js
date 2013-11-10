@@ -1,13 +1,3 @@
-// ==UserScript==
-// @name       SteamChatBot
-// @namespace  http://use.i.E.your.homepage/
-// @version    1.3
-// @description  A steam chat bot for steam chat
-// @match      http://steamcommunity.com/chat/*
-// @copyright  2013+, Nate O
-// @require http://code.jquery.com/jquery-2.0.3.min.js
-// @require http://courses.ischool.berkeley.edu/i290-4/f09/resources/gm_jq_xhr.js
-// ==/UserScript==
 // select the target node
 
 var chatBot = "[SCB] ";
@@ -390,38 +380,95 @@ function getDay(date) {
     return result;
 }
 
+//CHAT POLL
+//=======================================================================================
 
-// MUTATION OBSERVER
-// =======================================================================================
-// Target for observer
-var target = document.querySelector("#chatlog");
+//Keep track of the number of commands from each friend, to know if we've received new messages
+var commandCounts = new Array(); //Like [[friendID,2] , [friendID2,25] , ...]
 
-MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+//for a given friend, updates the command count
+function updateCommandCount(friend,newCommandCount){
+	for(var i = 0; i < commandCounts.length; i++){
+		if(commandCounts[i][0] == friend){
+			commandCounts[i][1] = newCommandCount;
+			return;
+		}
+	}
+	//We reached the end and never found our friend :( make a friend.
+	commandCounts.push([friend,newCommandCount]);
+}
 
-// Observer stuffs
-var observer = new MutationObserver(function(mutations) {  
-    mutations.forEach(function(mutation) {
-        if (mutation.type === 'childList') {
-            //console.log(mutation.addedNodes);
-            var numNodes = mutation.addedNodes.length;
-            //console.log($(mutation.addedNodes[0]).children('.chat_message_text').text());
-            var text = $(mutation.addedNodes[0]).children('.chat_message_text').text();
-            
-            if (
-                text != 'undefined') {
-                chooseAction(text);
-            }
-        }
-    });
-});
+//Looks up the command count for a friend. If it's not in the list, return 0
+function getCommandCount(friend){
+	for(var i = 0; i < commandCounts.length; i++){
+		if(commandCounts[i][0] == friend){
+			return commandCounts[i][1];
+		}
+	}
+	//At the end, return 0
+	return 0;
+}
 
-// define what element should be observed by the observer
-// and what types of mutations trigger the callback
-observer.observe(target, {
-  subtree: true,
-  attributes: true,
-  childList: true
-});
+function click(el){
+	var ev = document.createEvent("MouseEvent");
+	ev.initMouseEvent(
+		"click",
+		true /* bubble */, true /* cancelable */,
+		window, null,
+		0, 0, 0, 0, /* coordinates */
+		false, false, false, false, /* modifier keys */
+		0 /*left*/, null
+	);
+	el.dispatchEvent(ev);
+}
+
+//The polling function
+var chatPoll = function() {
+	//go through the recent chats and look for new commands
+	
+	var mostRecentChats = Chat.m_rgFriendLists[0].m_elGroup[0].getElementsByClassName('friendslist_entry'); //people that have talked to us recently
+	if(mostRecentChats.length == 0){
+		console.log("No recent chats");
+		return; //don't do anything if nobody is talking to us
+	}
+	
+	
+	for(var i = 0; i < mostRecentChats.length; i++){
+		var friend = mostRecentChats[0];
+		var friendID = friend.getAttribute("data-miniprofile");
+		console.log(friendID);
+		console.log(friend);
+		
+		click(friend);
+		
+		//Count the number of commands
+		var chatLogLength = document.querySelector("#chatlog").querySelectorAll(".chat_message").length;
+		var chatLogSelf = document.querySelector("#chatlog").querySelectorAll(".chat_message_self").length;
+		var chatLogCommands = chatLogLength - chatLogSelf;
+		
+		var mostRecentMessage = document.querySelector("#chatlog").querySelectorAll(".chat_message")[chatLogLength-1];
+		
+		var executeNewCommand = (getCommandCount(friendID) != chatLogCommands);
+		
+		var command = mostRecentMessage.querySelector(".chat_message_text").innerText;
+		console.log("Executing "+command+" for "+friendID);
+		if(executeNewCommand){
+			chooseAction(command);
+			console.log("Executing "+command+" for "+friendID);
+		}
+		
+		//Update the number of messages
+		updateCommandCount(friendID, chatLogCommands);
+			
+		
+	}
+}
+
+setInterval(function(){
+	chatPoll();
+},500);
+
+
 
 
 // SEND MESSAGE FUNCTION
