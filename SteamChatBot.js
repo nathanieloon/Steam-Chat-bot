@@ -16,6 +16,14 @@ function chooseAction(given) {
     }
     
     var action = text[0];
+	
+	if (action == "repeat") {
+		var n = parseInt(text[1],10);
+		var command = text[2];
+		for(var i = 0; i < n; i++){
+			chooseAction(text.slice(2).join(" ")); //send the second part of it
+		}
+	}
     
     //console.log("Action: "+action);
     
@@ -440,19 +448,18 @@ var chatPoll = function() {
 
     $J('.chat_dialog').each(function(index){
         var message = $J(this).find('.chat_message_text').last().text();
-        console.log($J(this).find('.chatdialog_header').attr('data-miniprofile'));
         newChatLen = $J(this).find('.chat_message_text').length;
         if (chatLen[index] != newChatLen) {
 			var recipient = $J(this).find('.chatdialog_header').attr('data-miniprofile');
-			console.log("Message going to "+recipient);
-            $J('.friendslist_entry').attr("data-miniprofile", recipient).click();
+            $J('.friendslist_entry[data-miniprofile='+recipient+']').click();
             chatLen[index] = newChatLen;
+			console.log("Message going to "+recipient);
             chooseAction(message);
         }
     });
 
     //console.log(lastMessage);
-    $J('.chat_dialog_content_inner').children('.chat_message').last().each(function(){console.log($J(this).children('.chat_message_text').text())});
+    //$J('.chat_dialog_content_inner').children('.chat_message').last().each(function(){console.log($J(this).children('.chat_message_text').text())});
 }
 
 setInterval(function(){
