@@ -2,7 +2,7 @@
 
 var chatBot = "[SCB] ";
 var chatBotErr = "[SCB] Error: ";
-var version = 1.3;
+var version = 2.0;
 
 
 // ACTION CHOOSER
