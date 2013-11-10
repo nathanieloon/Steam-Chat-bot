@@ -410,58 +410,47 @@ function getCommandCount(friend){
 }
 
 function click(el){
-	var ev = document.createEvent("MouseEvent");
-	ev.initMouseEvent(
-		"click",
-		true /* bubble */, true /* cancelable */,
-		window, null,
-		0, 0, 0, 0, /* coordinates */
-		false, false, false, false, /* modifier keys */
-		0 /*left*/, null
-	);
-	el.dispatchEvent(ev);
+    var ev = document.createEvent("MouseEvent");
+    ev.initMouseEvent(
+        "click",
+        true /* bubble */, true /* cancelable */,
+        window, null,
+        0, 0, 0, 0, /* coordinates */
+        false, false, false, false, /* modifier keys */
+        0 /*left*/, null
+    );
+    el.dispatchEvent(ev);
 }
+
+// Click all the names to open them up
+var numOffline = $('.offline').length, chatLen = new Array();
+$('.in-game').each(function(){click(this)});
+$('.online').each(function(){click(this)});
 
 //The polling function
 var chatPoll = function() {
 	//go through the recent chats and look for new commands
 	
-	var mostRecentChats = Chat.m_rgFriendLists[0].m_elGroup[0].getElementsByClassName('friendslist_entry'); //people that have talked to us recently
-	if(mostRecentChats.length == 0){
-		console.log("No recent chats");
-		return; //don't do anything if nobody is talking to us
-	}
-	
-	
-	for(var i = 0; i < mostRecentChats.length; i++){
-		var friend = mostRecentChats[0];
-		var friendID = friend.getAttribute("data-miniprofile");
-		console.log(friendID);
-		console.log(friend);
-		
-		click(friend);
-		
-		//Count the number of commands
-		var chatLogLength = document.querySelector("#chatlog").querySelectorAll(".chat_message").length;
-		var chatLogSelf = document.querySelector("#chatlog").querySelectorAll(".chat_message_self").length;
-		var chatLogCommands = chatLogLength - chatLogSelf;
-		
-		var mostRecentMessage = document.querySelector("#chatlog").querySelectorAll(".chat_message")[chatLogLength-1];
-		
-		var executeNewCommand = (getCommandCount(friendID) != chatLogCommands);
-		
-		var command = mostRecentMessage.querySelector(".chat_message_text").innerText;
-		console.log("Executing "+command+" for "+friendID);
-		if(executeNewCommand){
-			chooseAction(command);
-			console.log("Executing "+command+" for "+friendID);
-		}
-		
-		//Update the number of messages
-		updateCommandCount(friendID, chatLogCommands);
-			
-		
-	}
+    if (numOffline != $('.offline').length) {
+        numOffline = $('.offline').length;
+        // Click all the names to open them up
+        $('.in-game').each(function(){click(this)});
+        $('.online').each(function(){click(this)});
+    }
+
+    $('.chat_dialog').each(function(index){
+        var message = $(this).find('.chat_message_text').last().text();
+        console.log(message);
+        newChatLen = $(this).find('.chat_message_text').length;
+        if (chatLen[index] != newChatLen) {
+            click($('.friendslist_entry').attr("data-miniprofile", $(this).find('.chatdialog_header').attr('data-miniprofile')));
+            chatLen[index] = newChatLen;
+            chooseAction(message);
+        }
+    });
+
+    //console.log(lastMessage);
+    $('.chat_dialog_content_inner').children('.chat_message').last().each(function(){console.log($(this).children('.chat_message_text').text())});
 }
 
 setInterval(function(){
