@@ -348,9 +348,9 @@ function stopAllTimers() {
 
 // Format time
 function formatTimer(time) {
-    var hours = ((time / (1000*60*60)) % 24)+"hrs";
-    var min = ((time / (1000*60)) % 60)+"min";
-    var secs = time/1000+"s";
+    var hours = parseInt((time / (1000*60*60)) % 24)+"hrs";
+    var min = parseInt((time / (1000*60)) % 60)+"min";
+    var secs = (time/1000%60)+"s";
     if (time > 3600000) {
         return hrs+", "+min+" and "+secs;
     } else if (time > 60000) { 
