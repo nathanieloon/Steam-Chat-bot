@@ -348,10 +348,15 @@ function stopAllTimers() {
 
 // Format time
 function formatTimer(time) {
-	if (time > 60000) { 
-    	return time%6000+"m and"+time/1000+"s";
-	} else {
-        return time/1000+"s";
+    var hours = ((time / (1000*60*60)) % 24)+"hrs";
+    var min = ((time / (1000*60)) % 60)+"min";
+    var secs = time/1000+"s";
+    if (time > 3600000) {
+        return hrs+", "+min+" and "+secs;
+    } else if (time > 60000) { 
+        return min+" and "+secs;
+    } else {
+        return secs;
     }
 }
 
