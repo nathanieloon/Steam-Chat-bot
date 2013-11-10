@@ -390,33 +390,6 @@ function getDay(date) {
 
 //CHAT POLL
 //=======================================================================================
-
-//Keep track of the number of commands from each friend, to know if we've received new messages
-var commandCounts = new Array(); //Like [[friendID,2] , [friendID2,25] , ...]
-
-//for a given friend, updates the command count
-function updateCommandCount(friend,newCommandCount){
-	for(var i = 0; i < commandCounts.length; i++){
-		if(commandCounts[i][0] == friend){
-			commandCounts[i][1] = newCommandCount;
-			return;
-		}
-	}
-	//We reached the end and never found our friend :( make a friend.
-	commandCounts.push([friend,newCommandCount]);
-}
-
-//Looks up the command count for a friend. If it's not in the list, return 0
-function getCommandCount(friend){
-	for(var i = 0; i < commandCounts.length; i++){
-		if(commandCounts[i][0] == friend){
-			return commandCounts[i][1];
-		}
-	}
-	//At the end, return 0
-	return 0;
-}
-
 function click(el){
     var ev = document.createEvent("MouseEvent");
     ev.initMouseEvent(
@@ -437,34 +410,45 @@ $J('.online').each(function(){click(this)});
 
 //The polling function
 var chatPoll = function() {
-	//go through the recent chats and look for new commands
-	
-    if (numOffline != $J('.offline').length) {
-        numOffline = $J('.offline').length;
+    // Check if any people have come online/gone offline
+    if (numOffline != $('.offline').length) {
+        numOffline = $('.offline').length;
+
         // Click all the names to open them up
-        $J('.in-game').each(function(){click(this)});
-        $J('.online').each(function(){click(this)});
+        $('.in-game').each(function(){click(this)});
+        $('.online').each(function(){click(this)});
+
+        // Clear array
+        chatLen.length = 0;
     }
 
-    $J('.chat_dialog').each(function(index){
-        var message = $J(this).find('.chat_message_text').last().text();
-        newChatLen = $J(this).find('.chat_message_text').length;
+    // Check each chat for new stuffs
+    $('.chat_dialog').each(function(index){
+        newChatLen = $(this).find('.chat_message_text').length;
         if (chatLen[index] != newChatLen) {
-			var recipient = $J(this).find('.chatdialog_header').attr('data-miniprofile');
-            $J('.friendslist_entry[data-miniprofile='+recipient+']').click();
+            // Get the latest message
+            var message = $(this).find('.chat_message_text').last().text();
+
+            // Log new message
+            var person = $J(this).find('.persona').last().text();
+            console.log(person+": "+message);
+
+            // Get the correct chat window
+            var recipient = $J(this).find('.chatdialog_header').attr('data-miniprofile');
+            $J('.friendslist_entry[data-miniprofile = "'+recipient+'"]').click();
+
+            //console.log("clicking on"+ clicking.text());
             chatLen[index] = newChatLen;
-			console.log("Message going to "+recipient);
+            // Execute the command
+            
             chooseAction(message);
         }
     });
-
-    //console.log(lastMessage);
-    //$J('.chat_dialog_content_inner').children('.chat_message').last().each(function(){console.log($J(this).children('.chat_message_text').text())});
 }
 
 setInterval(function(){
 	chatPoll();
-},500);
+},100);
 
 
 
