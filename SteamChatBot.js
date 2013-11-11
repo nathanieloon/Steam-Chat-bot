@@ -42,42 +42,41 @@ function chooseAction(given) {
 	}*/
     
     //console.log("Action: "+action);
-    
-    if (action == "flipC") {
+    if (action == "/flipC") {
         sendMessage(flipCoin());
-    } else if (action == "rollD") {
+    } else if (action == "/rollD") {
         sendMessage(rollDie());
-    } else if (action == "rollH") {
+    } else if (action == "/rollH") {
         sendMessage(rollHundred());
-    } else if (action == "rollN") {
+    } else if (action == "/rollN") {
         sendMessage(rollNumber(val));
-    } else if (action == "rollL") {
+    } else if (action == "/rollL") {
         sendMessage(rollList(text));
-    } else if (action == "KFsb") {
+    } else if (action == "/KFsb") {
         sendMessage(killingFloorDosh());
-    } else if (action == "DOSH") {
+    } else if (action == "/DOSH") {
         sendMessage(megaDosh());
-    } else if (action == "getTime") {
+    } else if (action == "/getTime") {
         sendMessage(timeAndDate());
-    } else if (action == "getHelp") {
+    } else if (action == "/getHelp") {
         sendMessage(showHelp());
-    } else if (action == "timerHelp") {
+    } else if (action == "/timerHelp") {
         sendMessage(timerHelp());
-    } else if (action == "about"+chatBotName) {
+    } else if (action == "/about"+chatBotName) {
         sendMessage(showVersion());
-    } else if (action == "startCount") {
+    } else if (action == "/startCount") {
         startCount(val);
-    } else if (action == "stopCount") {
+    } else if (action == "/stopCount") {
         stopCount();
-    } else if (action == "startTimer") {
+    } else if (action == "/startTimer") {
         sendMessage(startTimer(val));
-    } else if (action == "stopTimer") {
+    } else if (action == "/stopTimer") {
         sendMessage(stopTimer(val));
-    } else if (action == "checkTimer") {
+    } else if (action == "/checkTimer") {
         sendMessage(checkTimer(val));
-    } else if (action == "listTimers") {
+    } else if (action == "/listTimers") {
         sendMessage(checkAllTimers());
-    } else if (action == "stopTimers") {
+    } else if (action == "/stopTimers") {
         sendMessage(stopAllTimers());
     }
 }
@@ -443,6 +442,9 @@ var chatPoll = function() {
         chatLen.length = 0;
     }
     
+    // This section could probably do with some refactoring, if possible, as it's the
+    // main source of complexity
+
     // Check each chat for new stuffs
     $('.chat_dialog').each(function(index){
         newChatLen = $(this).find('.chat_message_text').length;
@@ -460,8 +462,8 @@ var chatPoll = function() {
 
             //console.log("clicking on"+ clicking.text());
             chatLen[index] = newChatLen;
+
             // Execute the command
-            
             chooseAction(message);
         }
     });
