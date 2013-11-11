@@ -23,6 +23,8 @@ function chooseAction(given) {
     
     var action = text[0];
 	
+    // Temp disabled until admin commands are introduced
+    /*
 	if (action == "repeat") {
 		var n = parseInt(text[1],10);
 		var command = text[2];
@@ -34,7 +36,7 @@ function chooseAction(given) {
             chooseAction(text.slice(2).join(" ")); //send the second part of it
             }
         }
-	}
+	}*/
     
     //console.log("Action: "+action);
     
