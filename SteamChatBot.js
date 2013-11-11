@@ -6,8 +6,11 @@ $(document).ready(function() {
     }
 });
 
-var chatBot = "[SCB] ";
-var chatBotErr = "[SCB] Error: ";
+var chatBotName = "JEB";
+var chatBotDisplayName = "J.E.B";
+var chatBotFullName = "Jaunty Entertainment Bot ("+chatBotDisplayName+")";
+var chatBot = "["+chatBotDisplayName+"] ";
+var chatBotErr = "["+chatBotDisplayName+"] Error: ";
 var version = 2.0;
 
 
@@ -60,7 +63,7 @@ function chooseAction(given) {
         sendMessage(showHelp());
     } else if (action == "timerHelp") {
         sendMessage(timerHelp());
-    } else if (action == "aboutSCB") {
+    } else if (action == "about"+chatBotName) {
         sendMessage(showVersion());
     } else if (action == "startCount") {
         startCount(val);
@@ -82,13 +85,13 @@ function chooseAction(given) {
 // HELP FUNCTIONS
 // =======================================================================================
 function showVersion() {
-	return chatBot+"Steam Chat Bot (SCB) - v"+version+" - 2013 - Nate O";
+	return chatBot+chatBotFullName+" - v"+version+" - 2013 - Nate O";
 }
 
 // Show general help
 function showHelp() {
     var output = "";
-    output += chatBot+"Below are the valid functions for the Steam Chat Bot (SCB), and their valid syntaxes:\n";
+    output += chatBot+"Below are the valid functions for the "+chatBotFullName+", and their valid syntaxes:\n";
     output += chatBot+"flipC - Flips a Coin\n";
     output += chatBot+"rollD - Rolls a die.\n";
     output += chatBot+"rollH - Rolls between 0 and 100.\n";
@@ -101,7 +104,7 @@ function showHelp() {
     output += chatBot+"stopCount - Stop the current countdown.\n";
     output += chatBot+"getHelp - This help dialog.\n";
     output += chatBot+"timerHelp - Show help regarding timers.\n";
-    output += chatBot+"aboutSCB - Version information regarding the SCB.\n";
+    output += chatBot+"about"+chatBotName+" - Version information regarding "+chatBotDisplayName+".\n";
     return output;
 }
 
