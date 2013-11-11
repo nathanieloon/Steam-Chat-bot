@@ -1,5 +1,11 @@
 // select the target node
 
+$(document).ready(function() {
+    if (typeof Chat === 'undefined') {
+        console.log("ERROR: The chat didn't load properly - check your cookies.");
+    }
+});
+
 var chatBot = "[SCB] ";
 var chatBotErr = "[SCB] Error: ";
 var version = 2.0;

@@ -1,4 +1,5 @@
 var page = require('webpage').create();
+
 //We want to output text from page eval to the terminal
 page.onConsoleMessage = function(msg) {
     console.log(msg);
@@ -13,8 +14,6 @@ phantom.addCookie({
     'secure':   false,
     'expires':  (new Date()).getTime() + (1000 * 60 * 60 * 24 * 365 * 100)   /* <-- expires in 100 years */
 });
-
-
 
 page.open('http://steamcommunity.com/chat/', function(status) {
     if (status !== 'success') {
