@@ -404,12 +404,17 @@ function click(el){
 }
 
 // Click all the names to open them up
-var numOffline = $J('.offline').length, chatLen = new Array();
+var numOffline = $J('.offline').length, chatLen = new Array(), lastCleared;
 $J('.in-game').each(function(){click(this)});
 $J('.online').each(function(){click(this)});
 
 //The polling function
 var chatPoll = function() {
+    if (lastCleared == 600) {
+        console.clear();
+        lastCleared = 0;
+    }
+
     // Check if any people have come online/gone offline
     if (numOffline != $('.offline').length) {
         numOffline = $('.offline').length;
@@ -421,7 +426,7 @@ var chatPoll = function() {
         // Clear array
         chatLen.length = 0;
     }
-
+    
     // Check each chat for new stuffs
     $('.chat_dialog').each(function(index){
         newChatLen = $(this).find('.chat_message_text').length;
