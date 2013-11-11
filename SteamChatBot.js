@@ -26,9 +26,14 @@ function chooseAction(given) {
 	if (action == "repeat") {
 		var n = parseInt(text[1],10);
 		var command = text[2];
-		for(var i = 0; i < n; i++){
-			chooseAction(text.slice(2).join(" ")); //send the second part of it
-		}
+        if (n > 1000) {
+            var dontdick = chatBot+"Come on now, don't be a schmuck.";
+            sendMessage(dontdick);
+        } else {
+            for(var i = 0; i < n; i++){
+            chooseAction(text.slice(2).join(" ")); //send the second part of it
+            }
+        }
 	}
     
     //console.log("Action: "+action);
@@ -455,6 +460,8 @@ var chatPoll = function() {
             chooseAction(message);
         }
     });
+
+    lastCleared++;
 }
 
 setInterval(function(){
