@@ -15,11 +15,13 @@ phantom.addCookie({
     'expires':  (new Date()).getTime() + (1000 * 60 * 60 * 24 * 365 * 100)   /* <-- expires in 100 years */
 });
 
+t = Date.now();
 page.open('http://steamcommunity.com/chat/', function(status) {
     if (status !== 'success') {
         console.log('Unable to open page.');
     } else {
-        console.log("Page opened, injecting javascript");
+        t = Date.now() - t;
+        console.log("Page opened in " + t + "msec injecting javascript");
         
         page.injectJs("jquery-2.0.3.min.js");
         console.log("jquery-2.0.3.min.js loaded");
@@ -32,6 +34,15 @@ page.open('http://steamcommunity.com/chat/', function(status) {
         console.log("SteamChatBot.js loaded - SteamChatBot is now running");
     }	
 });
+
+/*var system = require('system');
+var line = system.stdin.readLine();
+
+if (line == 'reload') {
+    console.log('Reloading page...');
+    page.reload();
+    console.log('Page reloaded');
+}*/
 
 var i = 0;
 function takepic() {
