@@ -17,7 +17,7 @@ var version = 2.0;
 // ACTION CHOOSER
 // =======================================================================================
 // Choose option for flip/roll
-function chooseAction(given) {
+function chooseAction(given, person) {
     var text = given.split(" ");
     
     if (text.length > 1) {
@@ -40,7 +40,7 @@ function chooseAction(given) {
             }
         }
 	}*/
-    
+
     //console.log("Action: "+action);
     if (action == "/flipC") {
         sendMessage(flipCoin());
@@ -78,6 +78,19 @@ function chooseAction(given) {
         sendMessage(checkAllTimers());
     } else if (action == "/stopTimers") {
         sendMessage(stopAllTimers());
+    }
+
+    // AFK controls
+    if (action == "/afk") {
+        sendMessage(setAfk(person, given));
+    } else if (action != "["+chatBotDisplayName+"]") {
+        if (isAfk(Chat.m_User.m_strName) && (Chat.m_User.m_strName != person)) {
+            //console.log("userafk");
+            sendMessage(afkMsg(Chat.m_User.m_strName));
+        } else if (isAfk(Chat.m_ActiveFriend.m_strName) && (Chat.m_User.m_strName == person)) {
+            //console.log("friendafk");
+            sendMessage(afkMsg(Chat.m_ActiveFriend.m_strName));
+        }
     }
 }
 
@@ -464,7 +477,7 @@ var chatPoll = function() {
             chatLen[index] = newChatLen;
 
             // Execute the command
-            chooseAction(message);
+            chooseAction(message, person);
         }
     });
 

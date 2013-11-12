@@ -32,6 +32,9 @@ page.open('http://steamcommunity.com/chat/', function(status) {
         
         page.injectJs("SteamChatBot.js");
         console.log("SteamChatBot.js loaded - SteamChatBot is now running");
+
+        page.injectJs("afk-module.js");
+        console.log("SteamChatBot AFK module is running");
     }	
 });
 
