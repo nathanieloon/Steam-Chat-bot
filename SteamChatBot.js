@@ -84,10 +84,13 @@ function chooseAction(given, person) {
     if (action == "/afk") {
         sendMessage(setAfk(person, given));
     } else if (action != "["+chatBotDisplayName+"]") {
+        //console.log(person + " AFK ACTION HERE");
         if (isAfk(Chat.m_User.m_strName) && (Chat.m_User.m_strName != person)) {
             //console.log("userafk");
             sendMessage(afkMsg(Chat.m_User.m_strName));
-        } else if (isAfk(Chat.m_ActiveFriend.m_strName) && (Chat.m_User.m_strName == person)) {
+        }
+
+        if (isAfk(Chat.m_ActiveFriend.m_strName) && (Chat.m_User.m_strName == person)) {
             //console.log("friendafk");
             sendMessage(afkMsg(Chat.m_ActiveFriend.m_strName));
         }

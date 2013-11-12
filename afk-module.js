@@ -8,12 +8,16 @@ var afkList = new Array(), afkMsgs = new Array();
 function setAfk(person, message) {
     var msg = message.substr(5); // any better way to handle this?
     if (afkList.indexOf(person) == -1) {
+        // Add person to AFK lists
         afkList.push(person);
         afkMsgs.push(msg);
+
         return chatBot+person+" is now AFK.";
     } else {
-        afkList.splice(afkList[person.indexOf], 1);
-        afkMsgs.splice(afkList[msg.indexOf], 1);
+        // Remove person from AFK lists
+        afkList.splice(afkList.indexOf(person), 1);
+        afkMsgs.splice(afkMsgs.indexOf(msg), 1);
+        
         return chatBot+person+" is no longer AFK.";
     }
 }
