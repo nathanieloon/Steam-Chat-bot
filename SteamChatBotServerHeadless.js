@@ -29,12 +29,26 @@ page.open('http://steamcommunity.com/chat/', function(status) {
         page.injectJs("http://courses.ischool.berkeley.edu/i290-4/f09/resources/gm_jq_xhr.js");
         console.log("gm_jq_xhr.js loaded");
         
-        
         page.injectJs("SteamChatBot.js");
         console.log("SteamChatBot.js loaded - SteamChatBot is now running");
 
-        page.injectJs("afk-module.js");
+        page.injectJs("modules/actions.js");
+        console.log("SteamChatBot Actions module is running");
+
+        page.injectJs("modules/afk.js");
         console.log("SteamChatBot AFK module is running");
+
+        page.injectJs("modules/counter.js");
+        console.log("SteamChatBot Counter module is running");
+
+        page.injectJs("modules/help.js");
+        console.log("SteamChatBot Help module is running");
+
+        page.injectJs("modules/time.js");
+        console.log("SteamChatBot Time module is running");
+
+        page.injectJs("modules/timer.js");
+        console.log("SteamChatBot Timer module is running");
     }	
 });
 

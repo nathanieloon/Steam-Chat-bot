@@ -41,43 +41,63 @@ function chooseAction(given, person) {
         }
 	}*/
 
+    // Switch case for action controls
     //console.log("Action: "+action);
-    if (action == "/flipC") {
-        sendMessage(flipCoin());
-    } else if (action == "/rollD") {
-        sendMessage(rollDie());
-    } else if (action == "/rollH") {
-        sendMessage(rollHundred());
-    } else if (action == "/rollN") {
-        sendMessage(rollNumber(val));
-    } else if (action == "/rollL") {
-        sendMessage(rollList(text));
-    } else if (action == "/KFsb") {
-        sendMessage(killingFloorDosh());
-    } else if (action == "/DOSH") {
-        sendMessage(megaDosh());
-    } else if (action == "/getTime") {
-        sendMessage(timeAndDate());
-    } else if (action == "/getHelp") {
-        sendMessage(showHelp());
-    } else if (action == "/timerHelp") {
-        sendMessage(timerHelp());
-    } else if (action == "/about"+chatBotName) {
-        sendMessage(showVersion());
-    } else if (action == "/startCount") {
-        startCount(val);
-    } else if (action == "/stopCount") {
-        stopCount();
-    } else if (action == "/startTimer") {
-        sendMessage(startTimer(val));
-    } else if (action == "/stopTimer") {
-        sendMessage(stopTimer(val));
-    } else if (action == "/checkTimer") {
-        sendMessage(checkTimer(val));
-    } else if (action == "/listTimers") {
-        sendMessage(checkAllTimers());
-    } else if (action == "/stopTimers") {
-        sendMessage(stopAllTimers());
+    switch (action) {
+        case "/flipC":
+            sendMessage(flipCoin());
+            break;
+        case "/rollD":
+            sendMessage(rollDie());
+            break;
+        case "/rollH":
+            sendMessage(rollHundred());
+            break;
+        case "/rollN":
+            sendMessage(rollNumber(val));
+            break;
+        case "/rollL":
+            sendMessage(rollList(text));
+            break;
+        case "/KFsb":
+            sendMessage(killingFloorDosh());
+            break;
+        case "/DOSH":
+            sendMessage(megaDosh());
+            break;
+        case "/getTime":
+            sendMessage(timeAndDate());
+            break;
+        case "/getHelp":
+            sendMessage(showHelp());
+            break;
+        case "/timerHelp":
+            sendMessage(timerHelp());
+            break;
+        case "/about"+chatBotName:
+            sendMessage(showVersion());
+            break;
+        case "/startCount":
+            startCount(val);
+            break;
+        case "/stopCount":
+            stopCount();
+            break;
+        case "/startTimer":
+            sendMessage(startTimer(val));
+            break;
+        case "/stopTimer":
+            sendMessage(stopTimer(val));
+            break;
+        case "/checkTimer":
+            sendMessage(checkTimer(val));
+            break;
+        case "/listTimers":
+            sendMessage(checkAllTimers());
+            break;
+        case "/stopTimers":
+            sendMessage(stopAllTimers());
+            break;
     }
 
     // AFK controls
