@@ -15,7 +15,7 @@ var timers = new Array(), startTimes = new Array();
 function startTimer(text) {
     var id = text[1];
 
-    if (typeof num === 'undefined') {
+    if (typeof id === 'undefined') {
         sendMessage(chatBot+"A valid timer ID must be specified.");
         return;
     } else if (timers.indexOf(id) != -1) {
