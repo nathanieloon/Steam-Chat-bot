@@ -2,49 +2,69 @@
 // @author Nathaniel Oon
 // @date 2013
 
+// Add commands to array
+commands.push(['startT', startTimer]);
+commands.push(['stopT', stopTimer]);
+commands.push(['checkT', checkTimer]);
+commands.push(['listT', checkAllTimers]);
+commands.push(['stopTs', stopAllTimers]);
+
 // Function to start the timer
 var timers = new Array(), startTimes = new Array();
-function startTimer(num) {
+
+function startTimer(text) {
+    var id = text[1];
+
     if (typeof num === 'undefined') {
         return chatBot+"A valid timer ID must be specified.";
-    } else if (timers.indexOf(num) != -1) {
+    } else if (timers.indexOf(id) != -1) {
         sendMessage(chatBot+"This timer is already active.");
         return;
     }
-    timers.push(num);
+    timers.push(id);
     var timer = new Date();
     startTimes.push(timer.getTime());
-    return (chatBot+"Timer _"+num+"_ has begun");
+    var output = chatBot+"Timer _"+id+"_ has begun";
+    
+    sendMessage(output);
 }
 
 // Function to stop the timer
-function stopTimer(num) {
-    if (typeof num === 'undefined') {
+function stopTimer(text) {
+    var id = text[1];
+
+    if (typeof id === 'undefined') {
         return chatBot+"A valid timer ID must be specified.";
-    } else if (timers.indexOf(num) == -1) {
-        return chatBot+"Timer _"+num+"_ is not active, so cannot be stopped.";
+    } else if (timers.indexOf(id) == -1) {
+        return chatBot+"Timer _"+id+"_ is not active, so cannot be stopped.";
     }
         
     var timer = new Date();
     var endTime = timer.getTime();
-    finalTime = endTime-startTimes.splice(timers.indexOf(num), 1);
-    return chatBot+"Timer _"+timers.splice(timers.indexOf(num), 1)+"_ finished at: "+formatTimer(finalTime)+".";   
+    finalTime = endTime-startTimes.splice(timers.indexOf(id), 1);
+    var output = chatBot+"Timer _"+timers.splice(timers.indexOf(id), 1)+"_ finished at: "+formatTimer(finalTime)+".";   
+
+    sendMessage(output);
 }
 
 // Function to get timer status
-function checkTimer(num) {
-    if (timers.indexOf(num) != -1) {
+function checkTimer(text) {
+    var id = text[1];
+    var output;
+    if (timers.indexOf(id) != -1) {
         var timer = new Date();
         var time = timer.getTime();
-        currTime = time-startTimes[timers.indexOf(num)];  
-        return chatBot+"Timer _"+num+"_ is currently running, and is at "+formatTimer(currTime)+".";
+        currTime = time-startTimes[timers.indexOf(id)];  
+        output = chatBot+"Timer _"+id+"_ is currently running, and is at "+formatTimer(currTime)+".";
     } else {
-        return chatBot+"Timer _"+num+"_ is not active.";
+        output = chatBot+"Timer _"+id+"_ is not active.";
     }
+
+    sendMessage(output);
 }
 
 // Function to get all timer statuses
-function checkAllTimers() {
+function checkAllTimers(text) {
     var output = "", numTimers = timers.length;
     if (numTimers > 0) {
         output += chatBot+"The following timers are currently active:\n";
@@ -59,11 +79,11 @@ function checkAllTimers() {
         output += chatBot+"There are no timers currently active.";
     }
     
-    return output;
+    sendMessage(output);
 }
 
 // Function to get all timer statuses
-function stopAllTimers() {
+function stopAllTimers(text) {
     var output = "", numTimers = timers.length;
     if (numTimers > 0) {
         output += chatBot+"Stopping the following active timers:\n";
@@ -81,7 +101,7 @@ function stopAllTimers() {
         output += chatBot+"There are no timers currently active.";
     }
     
-    return output;
+    sendMessage(output);
 }
 
 // Format time
@@ -89,11 +109,15 @@ function formatTimer(time) {
     var hours = parseInt((time / (1000*60*60)) % 24)+"hrs";
     var min = parseInt((time / (1000*60)) % 60)+"min";
     var secs = (time/1000%60)+"s";
+    var output;
+
     if (time > 3600000) {
-        return hrs+", "+min+" and "+secs;
+        output = hrs+", "+min+" and "+secs;
     } else if (time > 60000) { 
-        return min+" and "+secs;
+        output = min+" and "+secs;
     } else {
-        return secs;
+        output = secs;
     }
+
+    sendMessage(output);
 }

@@ -25,10 +25,10 @@ page.open('http://steamcommunity.com/chat/', function(status) {
         
         page.injectJs("jquery-2.0.3.min.js");
         console.log("jquery-2.0.3.min.js loaded");
-        
+
         page.injectJs("SteamChatBot.js");
         console.log("SteamChatBot.js loaded - SteamChatBot is now running");
-
+        
         page.injectJs("modules/actions.js");
         console.log("SteamChatBot Actions module is running");
 

@@ -2,13 +2,22 @@
 // @author Nathaniel Oon
 // @date 2013
 
+// Add commands to array
+commands.push(['flipC', flipCoin]);
+commands.push(['rollD', rollDie]);
+commands.push(['rollH', rollHundred]);
+commands.push(['rollN', rollNumber]);
+commands.push(['rollL', rollList]);
+commands.push(['kfdosh', killingFloorDosh]);
+commands.push(['DOSH', megaDosh]);
+
 // Get a random number (will be a float)
 function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 // Flip a coin
-function flipCoin() {
+function flipCoin(text) {
     var coin = getRandom(0, 2);
     
     if (coin == 1) {
@@ -18,32 +27,43 @@ function flipCoin() {
     }
     
     console.log("Flip a coin: "+coin);
-    return chatBot+":penny::penny::penny: The coin lands on _"+coin+"_! :penny::penny::penny:";
+    var output = chatBot+":penny::penny::penny: The coin lands on _"+coin+"_! :penny::penny::penny:";
+
+    sendMessage(output);
 }
 
 // Roll a die
-function rollDie() {
+function rollDie(text) {
     var die = getRandom(0, 6);
     console.log("Roll a die: "+die);
-    return chatBot+":luck::luck::luck: You rolled a _"+die+"_! :luck::luck::luck:";
+
+    var output = chatBot+":luck::luck::luck: You rolled a _"+die+"_! :luck::luck::luck:";
+
+    sendMessage(output);
 }
 
 // Roll out of one hundred
-function rollHundred() {
+function rollHundred(text) {
     var hund = getRandom(0, 100);
     console.log("Roll out of one hundred: "+hund);
-    return chatBot+":hex::hex::hex: You rolled a _"+hund+"_! :hex::hex::hex:";
+    var output = chatBot+":hex::hex::hex: You rolled a _"+hund+"_! :hex::hex::hex:";
+
+    sendMessage(output);
 }
 
 // Roll to a roll of your choice
-function rollNumber(n) {
+function rollNumber(text) {
+    var n = text[1];
+    console.log("n is "+n);
     // Validity check
     if (n != parseInt(n, 10)) return chatBotErr+"The second argument for _rollN_ must be a number.";
     
     // Roll the number
     var num = getRandom(0, n);
     console.log("Roll to a max of "+n+": "+num);
-    return chatBot+":vaultkey::vaultkey::vaultkey: You rolled a _"+num+"_ out of _"+n+"_! :vaultkey::vaultkey::vaultkey:";
+    var output = chatBot+":vaultkey::vaultkey::vaultkey: You rolled a _"+num+"_ out of _"+n+"_! :vaultkey::vaultkey::vaultkey:";
+
+    sendMessage(output);
 }
 
 // Roll a list of values
@@ -79,12 +99,12 @@ function rollList(textArray) {
     }
     
     output += "_"+h_name+"_ wins with a roll of _"+h_val+"_!";
-    // Return results
-    return output;
+
+    sendMessage(output);
 }
 
 // The Killing Floor quote board
-function killingFloorDosh() {
+function killingFloorDosh(text) {
     var quoteN = getRandom (0, 9);   
     var quotes = ["Let's go shopping chaps.",
                   "Money, money, MONEY!",
@@ -98,11 +118,13 @@ function killingFloorDosh() {
                   "Cha-ching! Money money money!"
                   ]
     
-    return ":Dosh::Dosh::Dosh: "+quotes[quoteN]+" :Dosh::Dosh::Dosh:";
+    var output = ":Dosh::Dosh::Dosh: "+quotes[quoteN]+" :Dosh::Dosh::Dosh:";
+
+    sendMessage(output);
 }
 
 // MEGA DOSH
-function megaDosh() {
+function megaDosh(text) {
     var dosh = "";
     dosh += ".\n:Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh:\n\n";
     dosh += ":Dosh:  :Dosh:  :Dosh:                 :Dosh:  :Dosh:  :Dosh:                     :Dosh:  :Dosh:             :Dosh:         :Dosh:\n";
@@ -111,5 +133,7 @@ function megaDosh() {
     dosh += ":Dosh:             :Dosh:         :Dosh:                 :Dosh:          :Dosh:          :Dosh:            :Dosh:         :Dosh:\n";
     dosh += ":Dosh:  :Dosh:  :Dosh:                 :Dosh:  :Dosh:  :Dosh:                :Dosh:  :Dosh:                  :Dosh:         :Dosh:\n\n";
     dosh += ":Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh::Dosh:\n";
-    return dosh;
+    var output = dosh;
+
+    sendMessage(output);
 }

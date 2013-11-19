@@ -3,7 +3,6 @@
 // @date 2013
 var afkList = new Array(), afkMsgs = new Array();
 
-
 // Changing AFK state
 function setAfk(person, message) {
     var msg = message.substr(5); // any better way to handle this?

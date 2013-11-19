@@ -2,12 +2,17 @@
 // @author Nathaniel Oon
 // @date 2013
 
-function showVersion() {
+// Add commands to array
+commands.push(['about'+chatBotName, showVersion]);
+commands.push(['getHelp', showHelp]);
+commands.push(['timerHelp', timerHelp]);
+
+function showVersion(text) {
     return chatBot+chatBotFullName+" - v"+version+" - 2013 - Nate O";
 }
 
 // Show general help
-function showHelp() {
+function showHelp(text) {
     var output = "";
     output += chatBot+"Below are the valid functions for the "+chatBotFullName+", and their valid syntaxes:\n";
     output += chatBot+"flipC - Flips a Coin\n";
@@ -23,11 +28,12 @@ function showHelp() {
     output += chatBot+"getHelp - This help dialog.\n";
     output += chatBot+"timerHelp - Show help regarding timers.\n";
     output += chatBot+"about"+chatBotName+" - Version information regarding "+chatBotDisplayName+".\n";
-    return output;
+    
+    sendMessage(output);
 }
 
 // Show timer related help
-function timerHelp() {
+function timerHelp(text) {
     var output = "";
     output += chatBot+"Below are the valid timer functions, and their valid syntaxes:\n";
     output += chatBot+"startTimer [id] - Starts a timer with the given ID (this can be an int, or an alphanumeric id).\n";
@@ -36,5 +42,6 @@ function timerHelp() {
     output += chatBot+"listTimers - List the active timers.\n";
     output += chatBot+"stopTimers - Stop all of the active timers.\n";
     output += chatBot+"timerHelp - This help dialog.\n";
-    return output;
+    
+    sendMessage(output);
 }

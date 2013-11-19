@@ -2,11 +2,17 @@
 // @author Nathaniel Oon
 // @date 2013
 
+// Add commands to array
+commands.push(['startC', startCount]);
+commands.push(['stopC', startCount]);
+
 // Countdown variables
 var count, counter, countValid = false;
 
 // Start a countdown
-function startCount(time) {
+function startCount(text) {
+    var time = text[1];
+
     if (countValid) {
         sendMessage(chatBot+"There is already a countdown going, you cannot start another");
         return;
@@ -37,6 +43,6 @@ function countDown() {
 }
 
 // Abort the countdown
-function stopCount() {
+function stopCount(text) {
     countValid = false;
 }

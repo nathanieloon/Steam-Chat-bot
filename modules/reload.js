@@ -2,7 +2,7 @@
 // @author Nathaniel Oon
 // @date 2013
 
-function reloadPage() {
+function reloadPage(text) {
     location.reload();
     return chatBot+"Reloading page...";
 }

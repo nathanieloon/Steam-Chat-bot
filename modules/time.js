@@ -3,12 +3,14 @@
 // @date 2013
 
 // Get time & date
-function timeAndDate() {
+function timeAndDate(text) {
     var tnD = new Date();
     var months = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     var month = tnD.getMonth();
     
-    return chatBot+"The time is currently "+tnD.getHours()+":"+tnD.getMinutes()+":"+tnD.getSeconds()+", and the date is the "+getDay(tnD)+" of "+months[month]+", "+tnD.getFullYear()+".";
+    var output = chatBot+"The time is currently "+tnD.getHours()+":"+tnD.getMinutes()+":"+tnD.getSeconds()+", and the date is the "+getDay(tnD)+" of "+months[month]+", "+tnD.getFullYear()+".";
+
+    sendMessage(output);
 }
 
 // Get date with suffix

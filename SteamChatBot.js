@@ -14,6 +14,7 @@ var chatBotErr = "["+chatBotDisplayName+"] Error: ";
 var admin = Chat.m_User.m_strName;
 var version = 2.0;
 
+var commands = new Array();
 
 // ACTION CHOOSER
 // =======================================================================================
@@ -43,68 +44,12 @@ function chooseAction(given, person) {
         }
 	}
 
-    // Switch case for action controls
+    // Array loop for actions
     //console.log("Action: "+action);
-    switch (action) {
-        case "/flipC":
-            sendMessage(flipCoin());
-            break;
-        case "/rollD":
-            sendMessage(rollDie());
-            break;
-        case "/rollH":
-            sendMessage(rollHundred());
-            break;
-        case "/rollN":
-            sendMessage(rollNumber(val));
-            break;
-        case "/rollL":
-            sendMessage(rollList(text));
-            break;
-        case "/KFsb":
-            sendMessage(killingFloorDosh());
-            break;
-        case "/DOSH":
-            sendMessage(megaDosh());
-            break;
-        case "/getTime":
-            sendMessage(timeAndDate());
-            break;
-        case "/getHelp":
-            sendMessage(showHelp());
-            break;
-        case "/timerHelp":
-            sendMessage(timerHelp());
-            break;
-        case "/about"+chatBotName:
-            sendMessage(showVersion());
-            break;
-        case "/startCount":
-            startCount(val);
-            break;
-        case "/stopCount":
-            stopCount();
-            break;
-        case "/startTimer":
-            sendMessage(startTimer(val));
-            break;
-        case "/stopTimer":
-            sendMessage(stopTimer(val));
-            break;
-        case "/checkTimer":
-            sendMessage(checkTimer(val));
-            break;
-        case "/listTimers":
-            sendMessage(checkAllTimers());
-            break;
-        case "/stopTimers":
-            sendMessage(stopAllTimers());
-            break;
-        /*case "/reload":
-            if (admin == person) {
-                sendMessage(reloadPage());
-            }
-            break;*/
+    for (var i=0; i < commands.length; i++) {
+        if (action == commands[i][0]) {
+            commands[i][1](text);
+        }
     }
 
     // AFK controls
