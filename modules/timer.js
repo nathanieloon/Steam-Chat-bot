@@ -16,7 +16,8 @@ function startTimer(text) {
     var id = text[1];
 
     if (typeof num === 'undefined') {
-        return chatBot+"A valid timer ID must be specified.";
+        sendMessage(chatBot+"A valid timer ID must be specified.");
+        return;
     } else if (timers.indexOf(id) != -1) {
         sendMessage(chatBot+"This timer is already active.");
         return;
@@ -34,9 +35,11 @@ function stopTimer(text) {
     var id = text[1];
 
     if (typeof id === 'undefined') {
-        return chatBot+"A valid timer ID must be specified.";
+        sendMessage(chatBot+"A valid timer ID must be specified.");
+        return;
     } else if (timers.indexOf(id) == -1) {
-        return chatBot+"Timer _"+id+"_ is not active, so cannot be stopped.";
+        sendMessage(chatBot+"Timer _"+id+"_ is not active, so cannot be stopped.");
+        return;
     }
         
     var timer = new Date();
