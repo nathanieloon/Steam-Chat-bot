@@ -26,9 +26,6 @@ page.open('http://steamcommunity.com/chat/', function(status) {
         page.injectJs("jquery-2.0.3.min.js");
         console.log("jquery-2.0.3.min.js loaded");
         
-        page.injectJs("http://courses.ischool.berkeley.edu/i290-4/f09/resources/gm_jq_xhr.js");
-        console.log("gm_jq_xhr.js loaded");
-        
         page.injectJs("SteamChatBot.js");
         console.log("SteamChatBot.js loaded - SteamChatBot is now running");
 
@@ -49,6 +46,9 @@ page.open('http://steamcommunity.com/chat/', function(status) {
 
         page.injectJs("modules/timer.js");
         console.log("SteamChatBot Timer module is running");
+
+        /*page.injectJs("modules/reload.js");
+        console.log("SteamChatBot Page Reload module is running");*/
     }	
 });
 

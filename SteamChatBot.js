@@ -11,6 +11,7 @@ var chatBotDisplayName = "J.E.B";
 var chatBotFullName = "Jaunty Entertainment Bot ("+chatBotDisplayName+")";
 var chatBot = "["+chatBotDisplayName+"] ";
 var chatBotErr = "["+chatBotDisplayName+"] Error: ";
+var admin = Chat.m_User.m_strName;
 var version = 2.0;
 
 
@@ -19,6 +20,7 @@ var version = 2.0;
 // Choose option for flip/roll
 function chooseAction(given, person) {
     var text = given.split(" ");
+    var activeFriend = Chat.m_ActiveFriend.m_strName;
     
     if (text.length > 1) {
         var val = text[1];
@@ -27,8 +29,8 @@ function chooseAction(given, person) {
     var action = text[0];
 	
     // Temp disabled until admin commands are introduced
-    /*
-	if (action == "repeat") {
+    
+	if ((action == "repeat") && (person == admin)) {
 		var n = parseInt(text[1],10);
 		var command = text[2];
         if (n > 1000) {
@@ -39,7 +41,7 @@ function chooseAction(given, person) {
             chooseAction(text.slice(2).join(" ")); //send the second part of it
             }
         }
-	}*/
+	}
 
     // Switch case for action controls
     //console.log("Action: "+action);
@@ -98,6 +100,11 @@ function chooseAction(given, person) {
         case "/stopTimers":
             sendMessage(stopAllTimers());
             break;
+        /*case "/reload":
+            if (admin == person) {
+                sendMessage(reloadPage());
+            }
+            break;*/
     }
 
     // AFK controls
@@ -105,14 +112,14 @@ function chooseAction(given, person) {
         sendMessage(setAfk(person, given));
     } else if (action != "["+chatBotDisplayName+"]") {
         //console.log(person + " AFK ACTION HERE");
-        if (isAfk(Chat.m_User.m_strName) && (Chat.m_User.m_strName != person)) {
+        if (isAfk(admin) && (admin != person)) {
             //console.log("userafk");
-            sendMessage(afkMsg(Chat.m_User.m_strName));
+            sendMessage(afkMsg(admin));
         }
 
-        if (isAfk(Chat.m_ActiveFriend.m_strName) && (Chat.m_User.m_strName == person)) {
+        if (isAfk(activeFriend) && (admin == person)) {
             //console.log("friendafk");
-            sendMessage(afkMsg(Chat.m_ActiveFriend.m_strName));
+            sendMessage(afkMsg(activeFriend));
         }
     }
 }
