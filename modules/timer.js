@@ -3,11 +3,11 @@
 // @date 2013
 
 // Add commands to array
-commands.push(['startT', startTimer]);
-commands.push(['stopT', stopTimer]);
-commands.push(['checkT', checkTimer]);
-commands.push(['listT', checkAllTimers]);
-commands.push(['stopTs', stopAllTimers]);
+commands.push(['startTimer', startTimer]);
+commands.push(['stopTimer', stopTimer]);
+commands.push(['checkTimer', checkTimer]);
+commands.push(['listTimers', checkAllTimers]);
+commands.push(['stopTimers', stopAllTimers]);
 
 // Function to start the timer
 var timers = new Array(), startTimes = new Array();
@@ -122,5 +122,5 @@ function formatTimer(time) {
         output = secs;
     }
 
-    sendMessage(output);
+    return output;
 }
