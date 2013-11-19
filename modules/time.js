@@ -2,6 +2,9 @@
 // @author Nathaniel Oon
 // @date 2013
 
+// Add commands to array
+commands.push(['getTime', timeAndDate]);
+
 // Get time & date
 function timeAndDate(text) {
     var tnD = new Date();
