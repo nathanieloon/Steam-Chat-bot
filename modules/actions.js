@@ -54,9 +54,12 @@ function rollHundred(text) {
 // Roll to a roll of your choice
 function rollNumber(text) {
     var n = text[1];
-    console.log("n is "+n);
+    
     // Validity check
-    if (n != parseInt(n, 10)) return chatBotErr+"The second argument for _rollN_ must be a number.";
+    if (n != parseInt(n, 10)) {
+        sendMessage(chatBotErr+"The second argument for _rollN_ must be a number.");
+        return;
+    }
     
     // Roll the number
     var num = getRandom(0, n);
@@ -75,11 +78,14 @@ function rollList(textArray) {
     
     // Validity checks
     if (arrayLen < 3) {
-        return chatBotErr+"You must have at least 3 arguments for a _rollL_ action.";
+        sendMessage(chatBotErr+"You must have at least 3 arguments for a _rollL_ action.");
+        return;
     } else if (max != parseInt(max, 10)) {
-        return chatBotErr+"The last argument for _rollL_ must be an integer.";
+        sendMessage(chatBotErr+"The last argument for _rollL_ must be an integer.");
+        return;
     } else if (max < 0) {
-        return chatBotErr+"The max roll integer must be greater than 0.";
+        sendMessage(chatBotErr+"The max roll integer must be greater than 0.");
+        return;
     }
     
     // Set highest value and name
